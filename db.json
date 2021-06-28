@@ -1,0 +1,37 @@
+{
+    "products": [
+      { 
+          "name": "Cheese",
+          "brand": "La Holandesa",
+          "category": 1,
+          "price": {
+            "last": {
+                "when": "2021-06-14",
+                "price": 3 
+            },
+            "lowest": {
+                "when": "2021-03-14",
+                "price": 1 
+            },
+            "highest": {
+                "when": "2021-01-14",
+                "price": 4 
+            }
+          }
+      }
+    ],
+    "lists": [
+        {
+            "owner": 1, 
+            "name": "My Grocery List", 
+            "items":[
+                {"product": 1, "quantity": 1, "price": 5.2, "checked": false},
+                {"product": 1, "quantity": 2, "price": 5.2, "checked": false},
+                {"product": 1, "quantity": 3, "price": 5.2, "checked": false},
+                {"product": 1, "quantity": 4, "price": 5.2, "checked": false},
+                {"product": 1, "quantity": 5, "price": 5.2, "checked": false}
+            ]
+        }
+    ],
+    "profile": {"id": 1, "name": "Jean Marques"}
+}
