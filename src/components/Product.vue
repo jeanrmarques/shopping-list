@@ -17,16 +17,18 @@
 
 // Component Javascript
 <script>
-import { ProductService } from "../backendService";
 
 export default {
   name: "Product",
-  data() {
-    return {
-      products: [],
-    };
-  },
   computed: {
+    products: {
+      get(){
+        return this.$store.state.products
+      },
+      set(){
+        console.log('Products.set() : set');
+      }
+    },
     total: function () {
       let sum = 0;
       let len = this.products.length;
@@ -35,14 +37,7 @@ export default {
       }
       return sum;
     },
-  },
-  async created() {
-    try {
-      this.products = await ProductService.getProducts();
-    } catch (err) {
-      console.log(err);
-    }
-  },
+  }
 };
 </script>
 

@@ -1,37 +1,49 @@
 <template>
   <main class="home">
     <Header title="Shopping List" />
-    <!-- <Product /> -->
+    
+    <Product />
   </main>
 </template>
 
 <script>
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
-import { ProductService, ListService, UserService } from "../backendService";
-// import Product from "@/components/Product.vue";
+import Product from "@/components/Product.vue";
 
 export default {
   name: "Home",
   data() {
     return {
-      products: [],
-      lists: [],
-      users: [],
-    };
-  },
-  components: {
-    // Product,
-    Header,
-  },
-  async created() {
-    try {
-      this.products = await ProductService.getProducts();
-      this.lists = await ListService.getLists();
-      this.users = await UserService.getUsers();
-    } catch (err) {
-      console.log(err);
+
     }
   },
+  components: {
+    Product,
+    Header,
+  },
+  computed: {
+    lists: {
+      get(){
+        return this.$store.state.lists
+      },
+      set(){
+        console.log('Home.vue : Lists.set() : set');
+      }
+    },
+    users: {
+      get(){
+        return this.$store.state.users
+      },
+      set(){
+        console.log('Home.vue : Users.set() : set');
+      }
+    }    
+  },
+  created() {
+    this.$store.dispatch('fetchProducts');
+    this.$store.dispatch('fetchUsers');
+    this.$store.dispatch('fetchLists');
+  }
 };
 </script>

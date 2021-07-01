@@ -1,5 +1,11 @@
 # shopping-list
 
+## Run backend
+```
+From /server
+npm run dev
+```
+
 ## Project setup
 ```
 npm install
