@@ -45,15 +45,7 @@
       "checked": false,
       "quantity": 1,
       "price": 1.09
-    },
-    {
-      "id": "3",
-      "list": "60d8a265983cb22b34e405ac",
-      "product": "60d8a114983cb22b34e405ab",
-      "checked": false,
-      "quantity": 3,
-      "price": 1.64
-    }    
+    } 
   ],
   "users": [
     {

@@ -1,5 +1,10 @@
 import { createStore } from "vuex";
-import { ProductService, ListService, UserService, ItemService } from "../backendService";
+import {
+  ProductService,
+  ListService,
+  UserService,
+  ItemService,
+} from "../backendService";
 
 export default createStore({
   state: {
@@ -9,23 +14,39 @@ export default createStore({
     users: [],
   },
   getters: {
+    getProducts: (state) => {
+      return state.products;
+    },
+    getProductsNotInList: (state) => (list_id) => {
+      let items = state.items.filter((item) => item.list === list_id);
+      let res = [];
+      for (let i = 0; i < state.products.length; i++) {
+        let check = items.filter(
+          (item) => item.product == state.products[i].id
+        );
+        if (check.length == 0) {
+          res.push(state.products[i]);
+        }
+      }
+      return res;
+    },
     productDetail: (state) => (id) => {
-      return state.products.find(product => product.id === id);
+      return state.products.find((product) => product.id === id);
     },
     itemsInList: (state, getters) => (list_id) => {
-      let items = state.items.filter(item => item.list === list_id);
+      let items = state.items.filter((item) => item.list === list_id);
       let resp = [];
-      for(let i = 0; i < items.length; i++){
+      for (let i = 0; i < items.length; i++) {
         let details = getters.productDetail(items[i].product);
         let item = {
           data: items[i],
-          details : details
+          details: details,
         };
         resp.push(item);
       }
       return resp;
-    }
-  },  
+    },
+  },
   mutations: {
     // Setting up our data
     initializeProducts(state, products) {
@@ -42,18 +63,47 @@ export default createStore({
     },
 
     // Basic mutations
-    editItem (state, { item, quantity = item.quantity, checked = item.checked, price = item.price }) {
-      item.quantity = quantity
-      item.checked = checked
-      item.price = price
+    editProduct(
+      state,
+      {
+        product,
+        name = product.name,
+        brand = product.brand,
+        category = product.category,
+      }
+    ) {
+      product.name = name;
+      product.brand = brand;
+      product.category = category;
     },
-    addItem(state, item){
-      state.items.push(item)
+    addProduct(state, product) {
+      state.products.push(product);
     },
-    removeItem(state, item){
-      state.todos.splice(state.items.indexOf(item), 1)
-    }
+    removeProduct(state, product) {
+      console.log(product);
+      state.items.splice(state.items.indexOf(product), 1);
+    },
 
+    editItem(
+      state,
+      {
+        item,
+        quantity = item.quantity,
+        checked = item.checked,
+        price = item.price,
+      }
+    ) {
+      item.quantity = quantity;
+      item.checked = checked;
+      item.price = price;
+    },
+    addItem(state, item) {
+      state.items.push(item);
+    },
+    removeItem(state, item) {
+      console.log(item);
+      state.items.splice(state.items.indexOf(item), 1);
+    },
   },
   actions: {
     // Setting up our store with data from the database
@@ -106,16 +156,81 @@ export default createStore({
     },
 
     // Interactions
+    addProduct({ commit }, { name }) {
+      let id = Math.floor(Math.random() * 100000);
+      console.log(name);
+      let product = {
+        id: id,
+        name: name,
+        brand: "",
+        checked: false,
+        category: 0,
+      };
+      console.log("adding product: ");
+      console.log(product);
+      commit("addProduct", product);
+    },
+    newProductInList({ commit }, {list, name, quantity, price}){
+      console.log(list, name, quantity, price);
+      let id = Math.floor(Math.random() * 100000);
+      let item_id = Math.floor(Math.random() * 100000);
+      let product = {
+        id: id,
+        name: name,
+        brand: "",
+        checked: false,
+        category: 0,
+      };
+      let item = {
+        id: item_id,
+        list: list,
+        product: id,
+        checked: false,
+        quantity: quantity || 1,
+        price: price || 0.00,
+      };        
+      commit("addProduct", product);
+      commit("addItem", item);
+    },
+    removeProduct({ commit }, product) {
+      commit("removeProduct", product);
+    },
+    updateProduct({ commit }, { product, name, brand, category }) {
+      commit("editProduct", {
+        product,
+        name: name,
+        brand: brand,
+        category: category,
+      });
+    },
 
+    addItem({ commit }, { list, product }) {
+      let id = Math.floor(Math.random() * 100000);
+      console.log(list, product);
+      let item = {
+        id: id,
+        list: list,
+        product: product,
+        checked: false,
+        quantity: 1,
+        price: 0.0,
+      };
+      console.log("adding item: ");
+      console.log(item);
+      commit("addItem", item);
+    },
+    removeItem({ commit }, item) {
+      commit("removeItem", item);
+    },
     toggleItem({ commit }, item) {
-      commit('editItem', { item, checked: !item.checked });
+      commit("editItem", { item, checked: !item.checked });
     },
-    changeItemQuantity ({ commit }, {item, qty}) {
-      commit('editItem', { item, quantity: qty });
+    changeItemQuantity({ commit }, { item, qty }) {
+      commit("editItem", { item, quantity: qty });
     },
-    changeItemPrice ({ commit }, {item, price}) {
-      commit('editItem', { item, price: price });
-    }
+    changeItemPrice({ commit }, { item, price }) {
+      commit("editItem", { item, price: price });
+    },
   },
   modules: {},
 });

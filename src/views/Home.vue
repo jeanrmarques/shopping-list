@@ -1,59 +1,138 @@
 <template>
   <main class="home">
-    <Header title="Shopping List" />
+    <div class="container">
+      <div class="row align-items-center justify-content-center">
+        <div class="col-10">
+          <Header title="Shopping List" />
 
-    <ul class="productsOnList">
-      <li :key="index" v-for="(p, index) in itemsInList(activeList)">
-        <input
-          class="form-check-input"
-          type="checkbox"
-          :input-value="p.data.checked"
-          @change="toggleItem(p.data)"          
-        />
-        <input
-          class="form-control"
-          type="number"
-          min="0"
-          :value="p.data.quantity"
-          @change="itemQuantityChange(p.data, $event)"
-          @keyup="itemQuantityChange(p.data, $event)"
-        />
-        - {{ p.details.name }} - {{ p.data.price }}
-        <div class="price">
-          $
-          <input
-            class="form-control"
-            type="number"
-            min="0"
-            step=".01"
-            :value="p.data.price"
-            @change="itemPriceChange(p.data, $event)"
-            @keyup="itemPriceChange(p.data, $event)"
-          />    
-          = [ $ {{ (p.data.price * p.data.quantity).toFixed(2) }} ]
-        </div>  
-      </li>
-    </ul>
-    <div class="listTotal">
-      Total: $ {{ totalOnList(activeList).bought }}
-      <span v-if="totalOnList(activeList).potential != totalOnList(activeList).bought"
-        >(${{ totalOnList(activeList).potential }})</span
-      >
-    </div>    
+          <!-- List component -->
+          <ul class="productsOnList list-group">
+            <!-- Add product -->
+            <li id="addItemRow" class="list-group-item">
+              <span @click="newProductInList({list: activeList, ...newItemInList})" class="addItem btn btn-primary"
+                ><i class="fa fa-plus"></i
+              ></span>
+              <input
+                id="newProductPrice"
+                class="form-control"
+                type="number"
+                min="0"
+                v-model="newItemInList.quantity"
+              />
+              <input
+                type="text"
+                id="newProductName"
+                class="form-control"
+                placeholder="Product Name"
+                v-model="newItemInList.name"
+              />
+              <div class="price">
+                $
+                <input
+                  id="newProductPrice"
+                  class="form-control"
+                  type="number"
+                  min="0"
+                  step=".01"
+                  v-model="newItemInList.price"
+                />
+              </div>
+            </li>
+            <!-- -->
+            <li
+              class="list-group-item"
+              :key="index"
+              v-for="(p, index) in itemsInList(activeList)"
+            >
+              <span
+                @click="removeItem(p.data)"
+                class="removeItem btn btn-primary"
+                ><i class="fa fa-times"></i
+              ></span>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  :input-value="p.data.checked"
+                  @change="toggleItem(p.data)"
+                />
+              </div>
+              <input
+                class="form-control"
+                type="number"
+                min="0"
+                :value="p.data.quantity"
+                @change="itemQuantityChange(p.data, $event)"
+                @keyup="itemQuantityChange(p.data, $event)"
+              />
+              <span class="productName">
+                {{ p.details.name }}
+              </span>
+              <div class="price">
+                $
+                <input
+                  class="form-control"
+                  type="number"
+                  min="0"
+                  step=".01"
+                  :value="p.data.price"
+                  @change="itemPriceChange(p.data, $event)"
+                  @keyup="itemPriceChange(p.data, $event)"
+                />
+                = [ $ {{ (p.data.price * p.data.quantity).toFixed(2) }} ]
+              </div>
+            </li>
+          </ul>
+          <div class="listTotal">
+            Total: $ {{ totalOnList(activeList).bought }}
+            <span
+              v-if="
+                totalOnList(activeList).potential !=
+                totalOnList(activeList).bought
+              "
+              >(${{ totalOnList(activeList).potential }})</span
+            >
+          </div>
+          <!-- -->
+
+          <!-- Add item component -->
+          <br />
+          <br />
+          <h4>Add Item to the list</h4>
+          <div class="AddItem">
+            <select v-if="getProductsNotInList(activeList).length > 0" class="form-select form-select-lg mb-3" @change="addItemToList(activeList, $event)">
+              <option>Select Product</option>
+              <option
+                :key="index"
+                v-for="(p, index) in getProductsNotInList(activeList)"
+                :value="p.id"
+              >
+                {{ p.name }}
+              </option>
+            </select>
+          </div>
+          <!-- -->
+        </div>
+      </div>
+    </div>
   </main>
 </template>
 
 <script>
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Home",
   data() {
     return {
-      activeList : "60d8a265983cb22b34e405ac",
-      activeItems : []
+      activeList: "60d8a265983cb22b34e405ac",
+      newItemInList: {
+        name : "",
+        quantity: 1,
+        price: 0.00
+      }
     };
   },
   components: {
@@ -63,21 +142,33 @@ export default {
     ...mapActions([
       // 'editItem',
       // 'removeItem',
-      'toggleItem',
-      'changeItemQuantity',
-      'changeItemPrice'
-    ]),  
+      "toggleItem",
+      "changeItemQuantity",
+      "changeItemPrice",
+      "addItem",
+      "removeItem",
+      "addProduct",
+      "newProductInList",
+      "removeProduct",
+      "updateProduct",
+    ]),
+    addItemToList(list, e) {
+      console.log(e);
+      let product = e.target.value;
+      console.log(list, product);
+      this.addItem({ list, product });
+    },
     itemQuantityChange(item, e) {
       let qty = parseInt(e.target.value) || 0;
-      this.changeItemQuantity({item, qty});
+      this.changeItemQuantity({ item, qty });
     },
     itemPriceChange(item, e) {
       let price = parseFloat(e.target.value).toFixed(2);
-      console.log('val is: '+ e.target.value);
-      if(price.isNaN || e.target.value == ""){
+      console.log("val is: " + e.target.value);
+      if (price.isNaN || e.target.value == "") {
         price = parseFloat(0).toFixed(2);
       }
-      this.changeItemPrice({item, price});
+      this.changeItemPrice({ item, price });
     },
     showStore() {
       console.log(this.$store.state);
@@ -117,9 +208,11 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'productDetail',
-      'itemsInList'
-    ]),        
+      "productDetail",
+      "itemsInList",
+      "getProducts",
+      "getProductsNotInList",
+    ]),
     lists: {
       get() {
         return this.$store.state.lists;
@@ -135,7 +228,7 @@ export default {
       set() {
         console.log("Home.vue : Users.set() : set");
       },
-    }
+    },
   },
   async created() {
     this.$store.dispatch("fetchUsers");
@@ -147,6 +240,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.container {
+  max-width: 700px;
+}
+
+.form-check,
+.removeItem {
+  display: inline-block !important;
+}
+
+#newProductName {
+  display: inline-block;
+  width: 53%;
+}
+
 .lists {
   list-style: none;
   padding: 0;
