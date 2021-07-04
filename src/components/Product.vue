@@ -17,17 +17,16 @@
 
 // Component Javascript
 <script>
-
 export default {
   name: "Product",
   computed: {
     products: {
-      get(){
-        return this.$store.state.products
+      get() {
+        return this.$store.state.products;
       },
-      set(){
-        console.log('Products.set() : set');
-      }
+      set() {
+        console.log("Products.set() : set");
+      },
     },
     total: function () {
       let sum = 0;
@@ -37,7 +36,7 @@ export default {
       }
       return sum;
     },
-  }
+  },
 };
 </script>
 

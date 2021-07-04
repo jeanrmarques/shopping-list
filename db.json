@@ -1,37 +1,67 @@
 {
-    "products": [
-      { 
-          "name": "Cheese",
-          "brand": "La Holandesa",
-          "category": 1,
-          "price": {
-            "last": {
-                "when": "2021-06-14",
-                "price": 3 
-            },
-            "lowest": {
-                "when": "2021-03-14",
-                "price": 1 
-            },
-            "highest": {
-                "when": "2021-01-14",
-                "price": 4 
-            }
-          }
-      }
-    ],
-    "lists": [
-        {
-            "owner": 1, 
-            "name": "My Grocery List", 
-            "items":[
-                {"product": 1, "quantity": 1, "price": 5.2, "checked": false},
-                {"product": 1, "quantity": 2, "price": 5.2, "checked": false},
-                {"product": 1, "quantity": 3, "price": 5.2, "checked": false},
-                {"product": 1, "quantity": 4, "price": 5.2, "checked": false},
-                {"product": 1, "quantity": 5, "price": 5.2, "checked": false}
-            ]
-        }
-    ],
-    "profile": {"id": 1, "name": "Jean Marques"}
+  "products": [
+    {
+      "id": "60d8659f1f060c1f3c309042",
+      "name": "Hard Cheese",
+      "brand": "La Holandesa",
+      "category": 1
+    },
+    {
+      "id": "60d8a0e2983cb22b34e405aa",
+      "name": "Milk",
+      "brand": "Tru",
+      "category": 1
+    },
+    {
+      "id": "60d8a114983cb22b34e405ab",
+      "name": "Ground Meat",
+      "brand": null,
+      "category": 2
+    }
+  ],
+  "lists": [
+    {
+      "owner": "60d89f5a983cb22b34e405a9",
+      "name": "My Grocery List",
+      "active" : true,
+      "budget": null,
+      "createdAt": "2021-06-27T16:08:05.756Z",
+      "id": "60d8a265983cb22b34e405ac"
+    }
+  ],
+  "items": [
+    {
+      "id": "1",
+      "list": "60d8a265983cb22b34e405ac",
+      "product": "60d8659f1f060c1f3c309042",
+      "checked": false,
+      "quantity": 2,
+      "price": 4.55
+    },
+    {
+      "id": "2",
+      "list": "60d8a265983cb22b34e405ac",
+      "product": "60d8a0e2983cb22b34e405aa",
+      "checked": false,
+      "quantity": 1,
+      "price": 1.09
+    },
+    {
+      "id": "3",
+      "list": "60d8a265983cb22b34e405ac",
+      "product": "60d8a114983cb22b34e405ab",
+      "checked": false,
+      "quantity": 3,
+      "price": 1.64
+    }    
+  ],
+  "users": [
+    {
+      "id": "60d89f5a983cb22b34e405a9",
+      "name": "Jean Rodeghiero Marques",
+      "email": "jeanrmarques@gmail.com",
+      "password": "12345",
+      "createdAt": "2021-06-27T15:55:05.998Z"
+    }
+  ]
 }

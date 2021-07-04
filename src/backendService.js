@@ -1,10 +1,12 @@
 import axios from "axios";
 
-const url = "http://localhost:5555/api/";
+// const url = "http://localhost:5555/api/";
+const url = "http://localhost:3000/";
 
 const user_url = url + "users";
 const product_url = url + "products";
 const list_url = url + "lists";
+const item_url = url + "items";
 
 class UserService {
   // Add User
@@ -120,4 +122,42 @@ class ListService {
   }
 }
 
-export { UserService, ProductService, ListService };
+class ItemService {
+  // Add Item
+  static addItem(item) {
+    console.log("addItem API");
+    console.log(item);
+    return axios.post(item_url, {
+      item,
+    });
+  }
+
+  // Get Items
+  static getItems() {
+    console.log("getItems API");
+
+    const promise = axios.get(item_url).then((response) => response.data);
+
+    return promise;
+  }
+
+  // Update Item
+  static updateItem(item) {
+    console.log("updateItem API");
+    console.log(item);
+
+    return axios.put(item_url, {
+      item,
+    });
+  }
+
+  // Delete Item
+  static deleteItem(id) {
+    console.log("deleteItem API");
+    console.log(id);
+
+    return axios.delete(`${item_url}${id}`);
+  }
+}
+
+export { UserService, ProductService, ListService, ItemService };

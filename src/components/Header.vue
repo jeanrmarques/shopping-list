@@ -9,12 +9,7 @@ export default {
   name: "Header",
   props: {
     title: String,
-  },
-  data() {
-    return {
-      dataSet: "something",
-    };
-  },
+  }
 };
 </script>
 
