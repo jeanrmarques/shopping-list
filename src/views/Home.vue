@@ -5,6 +5,22 @@
         <div class="col-10">
           <Header title="Shopping List" />
 
+          <!-- Add item component -->
+          <h4>Add Item to the list</h4>
+          <div class="AddItem">
+            <select v-if="getProductsNotInList(activeList).length > 0" class="form-select form-select-lg mb-3" @change="addItemToList(activeList, $event)">
+              <option>Select an existing product or...</option>
+              <option
+                :key="index"
+                v-for="(p, index) in getProductsNotInList(activeList)"
+                :value="p.id"
+              >
+                {{ p.name }}
+              </option>
+            </select>
+          </div>
+          <!-- -->
+
           <!-- List component -->
           <ul class="productsOnList list-group">
             <!-- Add product -->
@@ -23,7 +39,7 @@
                 type="text"
                 id="newProductName"
                 class="form-control"
-                placeholder="Product Name"
+                placeholder="Add a new product"
                 v-model="newItemInList.name"
               />
               <div class="price">
@@ -49,7 +65,7 @@
                 class="removeItem btn btn-primary"
                 ><i class="fa fa-times"></i
               ></span>
-              <div class="form-check">
+              <div class="form-check form-check-inline">
                 <input
                   class="form-check-input"
                   type="checkbox"
@@ -92,24 +108,6 @@
               "
               >(${{ totalOnList(activeList).potential }})</span
             >
-          </div>
-          <!-- -->
-
-          <!-- Add item component -->
-          <br />
-          <br />
-          <h4>Add Item to the list</h4>
-          <div class="AddItem">
-            <select v-if="getProductsNotInList(activeList).length > 0" class="form-select form-select-lg mb-3" @change="addItemToList(activeList, $event)">
-              <option>Select Product</option>
-              <option
-                :key="index"
-                v-for="(p, index) in getProductsNotInList(activeList)"
-                :value="p.id"
-              >
-                {{ p.name }}
-              </option>
-            </select>
           </div>
           <!-- -->
         </div>
@@ -244,7 +242,6 @@ export default {
   max-width: 700px;
 }
 
-.form-check,
 .removeItem {
   display: inline-block !important;
 }
