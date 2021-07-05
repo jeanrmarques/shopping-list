@@ -12,10 +12,17 @@ export default createStore({
     items: [],
     lists: [],
     users: [],
+    activeList: null,
   },
   getters: {
     getProducts: (state) => {
       return state.products;
+    },
+    getLists: (state) => {
+      return state.lists;
+    },
+    activeList: (state) => {
+      return state.activeList;
     },
     getProductsNotInList: (state) => (list_id) => {
       let items = state.items.filter((item) => item.list === list_id);
@@ -80,7 +87,6 @@ export default createStore({
       state.products.push(product);
     },
     removeProduct(state, product) {
-      console.log(product);
       state.items.splice(state.items.indexOf(product), 1);
     },
 
@@ -101,9 +107,12 @@ export default createStore({
       state.items.push(item);
     },
     removeItem(state, item) {
-      console.log(item);
       state.items.splice(state.items.indexOf(item), 1);
     },
+
+    setActiveList(state, id) {
+      state.activeList = id;
+    }
   },
   actions: {
     // Setting up our store with data from the database
@@ -231,6 +240,11 @@ export default createStore({
     changeItemPrice({ commit }, { item, price }) {
       commit("editItem", { item, price: price });
     },
+
+    setActiveList({ commit }, id) {
+      console.log(id);
+      commit("setActiveList", id);
+    }
   },
   modules: {},
 });

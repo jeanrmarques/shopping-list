@@ -1,116 +1,124 @@
 <template>
   <main class="home">
+    <Header title="Shopping Tracker" />
     <div class="container">
       <div class="row align-items-center justify-content-center">
-        <div class="col-10">
-          <Header title="Shopping List" />
+        <div class="col-lg-6">
+          <div v-if="activeList" class="card">
+            <div class="card-body">
+              <!-- Add item component -->
+              <div class="AddItem">
+                <h4>Add Item to the list</h4>
+                <select v-if="getProductsNotInList(activeList).length > 0" class="form-select form-select-lg mb-3" @change="addItemToList(activeList, $event)">
+                  <option value=null >Select an existing product or...</option>
+                  <option
+                    :key="index"
+                    v-for="(p, index) in getProductsNotInList(activeList)"
+                    :value="p.id"
+                  >
+                    {{ p.name }}
+                  </option>
+                </select>
+              </div>
+              <!-- -->
 
-          <!-- Add item component -->
-          <h4>Add Item to the list</h4>
-          <div class="AddItem">
-            <select v-if="getProductsNotInList(activeList).length > 0" class="form-select form-select-lg mb-3" @change="addItemToList(activeList, $event)">
-              <option>Select an existing product or...</option>
-              <option
-                :key="index"
-                v-for="(p, index) in getProductsNotInList(activeList)"
-                :value="p.id"
-              >
-                {{ p.name }}
-              </option>
-            </select>
-          </div>
-          <!-- -->
+              <!-- List component -->
+              <div class="activeList">
+                <ul class="productsOnList list-group">
+                  <!-- Add product -->
+                  <li id="addItemRow" class="list-group-item">
+                    <span @click="newProductInList({list: activeList, ...newItemInList})" class="addItem btn btn-primary"
+                      ><i class="fa fa-plus"></i
+                    ></span>
+                    <input
+                      id="newProductPrice"
+                      class="form-control"
+                      type="number"
+                      min="0"
+                      v-model="newItemInList.quantity"
+                    />
+                    <input
+                      type="text"
+                      id="newProductName"
+                      class="form-control"
+                      placeholder="Add a new product"
+                      v-model="newItemInList.name"
+                    />
+                    <div class="price">
+                      $
+                      <input
+                        id="newProductPrice"
+                        class="form-control"
+                        type="number"
+                        min="0"
+                        step=".01"
+                        v-model="newItemInList.price"
+                      />
+                    </div>
+                  </li>
+                  <!-- -->
+                  <li
+                    class="list-group-item"
+                    :key="index"
+                    v-for="(p, index) in itemsInList(activeList)"
+                  >
+                    <span
+                      @click="removeItem(p.data)"
+                      class="removeItem btn btn-primary"
+                      ><i class="fa fa-times"></i
+                    ></span>
+                    <div class="form-check form-check-inline">
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        :input-value="p.data.checked"
+                        @change="toggleItem(p.data)"
+                      />
+                    </div>
+                    <input
+                      class="form-control"
+                      type="number"
+                      min="0"
+                      :value="p.data.quantity"
+                      @change="itemQuantityChange(p.data, $event)"
+                      @keyup="itemQuantityChange(p.data, $event)"
+                    />
+                    <span class="productName">
+                      {{ p.details.name }}
+                    </span>
+                    <div class="price">
+                      $
+                      <input
+                        class="form-control"
+                        type="number"
+                        min="0"
+                        step=".01"
+                        :value="p.data.price"
+                        @change="itemPriceChange(p.data, $event)"
+                        @keyup="itemPriceChange(p.data, $event)"
+                      />
+                      = [ $ {{ (p.data.price * p.data.quantity).toFixed(2) }} ]
+                    </div>
+                  </li>
+                </ul>
+                <div class="listTotal">
+                  Total: $ {{ totalOnList(activeList).bought }}
+                  <span
+                    v-if="
+                      totalOnList(activeList).potential !=
+                      totalOnList(activeList).bought
+                    "
+                    >(${{ totalOnList(activeList).potential }})</span
+                  >
+                </div>
+              </div>
 
-          <!-- List component -->
-          <ul class="productsOnList list-group">
-            <!-- Add product -->
-            <li id="addItemRow" class="list-group-item">
-              <span @click="newProductInList({list: activeList, ...newItemInList})" class="addItem btn btn-primary"
-                ><i class="fa fa-plus"></i
-              ></span>
-              <input
-                id="newProductPrice"
-                class="form-control"
-                type="number"
-                min="0"
-                v-model="newItemInList.quantity"
-              />
-              <input
-                type="text"
-                id="newProductName"
-                class="form-control"
-                placeholder="Add a new product"
-                v-model="newItemInList.name"
-              />
-              <div class="price">
-                $
-                <input
-                  id="newProductPrice"
-                  class="form-control"
-                  type="number"
-                  min="0"
-                  step=".01"
-                  v-model="newItemInList.price"
-                />
-              </div>
-            </li>
-            <!-- -->
-            <li
-              class="list-group-item"
-              :key="index"
-              v-for="(p, index) in itemsInList(activeList)"
-            >
-              <span
-                @click="removeItem(p.data)"
-                class="removeItem btn btn-primary"
-                ><i class="fa fa-times"></i
-              ></span>
-              <div class="form-check form-check-inline">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  :input-value="p.data.checked"
-                  @change="toggleItem(p.data)"
-                />
-              </div>
-              <input
-                class="form-control"
-                type="number"
-                min="0"
-                :value="p.data.quantity"
-                @change="itemQuantityChange(p.data, $event)"
-                @keyup="itemQuantityChange(p.data, $event)"
-              />
-              <span class="productName">
-                {{ p.details.name }}
-              </span>
-              <div class="price">
-                $
-                <input
-                  class="form-control"
-                  type="number"
-                  min="0"
-                  step=".01"
-                  :value="p.data.price"
-                  @change="itemPriceChange(p.data, $event)"
-                  @keyup="itemPriceChange(p.data, $event)"
-                />
-                = [ $ {{ (p.data.price * p.data.quantity).toFixed(2) }} ]
-              </div>
-            </li>
-          </ul>
-          <div class="listTotal">
-            Total: $ {{ totalOnList(activeList).bought }}
-            <span
-              v-if="
-                totalOnList(activeList).potential !=
-                totalOnList(activeList).bought
-              "
-              >(${{ totalOnList(activeList).potential }})</span
-            >
+              <!-- -->
+
+            </div>
           </div>
-          <!-- -->
         </div>
+        <!-- <div class="col-lg-6"></div> -->
       </div>
     </div>
   </main>
@@ -125,7 +133,6 @@ export default {
   name: "Home",
   data() {
     return {
-      activeList: "60d8a265983cb22b34e405ac",
       newItemInList: {
         name : "",
         quantity: 1,
@@ -149,6 +156,7 @@ export default {
       "newProductInList",
       "removeProduct",
       "updateProduct",
+      "setActiveList"
     ]),
     addItemToList(list, e) {
       console.log(e);
@@ -210,6 +218,8 @@ export default {
       "itemsInList",
       "getProducts",
       "getProductsNotInList",
+      "getLists",
+      "activeList"
     ]),
     lists: {
       get() {
@@ -237,9 +247,28 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.container {
-  max-width: 700px;
+<style lang="scss">
+.bg-image {
+  background: url('../assets/busyconsumers_0.jpg') no-repeat;
+  background-size: cover;
+  z-index: 1;
+  position: fixed;
+  left: -2.5vw;
+  display: block;
+  width: 105vw;
+  height: 105vh;
+  filter: blur(5px) grayscale(.9);
+  top: -2.5vh;  
+}
+
+#app {
+  position: relative;
+  z-index: 2;
+  background: #1146467a;
+}
+
+main.home {
+  min-height: 100vh;
 }
 
 .removeItem {
