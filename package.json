@@ -1,6 +1,6 @@
 {
-  "name": "shopping-list",
-  "version": "0.1.0",
+  "name": "Shopping-Tracker-BETA",
+  "version": "0.2.35",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

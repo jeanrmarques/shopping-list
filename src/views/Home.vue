@@ -74,7 +74,7 @@
                       <input
                         class="form-check-input"
                         type="checkbox"
-                        :input-value="p.data.checked"
+                        :checked="p.data.checked"
                         @change="toggleItem(p.data)"
                       />
                     </div>
@@ -98,7 +98,7 @@
                         step=".01"
                         :value="p.data.price"
                         @change="itemPriceChange(p.data, $event)"
-                        @keyup="itemPriceChange(p.data, $event)"
+
                       />
                       = [ $ {{ (p.data.price * p.data.quantity).toFixed(2) }} ]
                     </div>
@@ -139,7 +139,7 @@ export default {
       newItemInList: {
         name : "",
         quantity: 1,
-        price: 0.00
+        price: 0
       }
     };
   },
@@ -175,7 +175,7 @@ export default {
       let price = parseFloat(e.target.value).toFixed(2);
       console.log("val is: " + e.target.value);
       if (price.isNaN || e.target.value == "") {
-        price = parseFloat(0).toFixed(2);
+        price = parseInt(0);
       }
       this.changeItemPrice({ item, price });
     },

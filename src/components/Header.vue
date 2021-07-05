@@ -9,9 +9,10 @@
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
           <a class="nav-link active" aria-current="page" href="#"><i class="fas fa-home"></i> Home</a>
-          <a class="nav-link" href="#"><i class="fas fa-info"></i> About</a>
-          <a class="nav-link" href="#"><i class="fas fa-carrot"></i> Products</a>
-          <a class="nav-link" href="#"><i class="fas fa-list-ul"></i> All My Lists</a>
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-info"></i> About</a>
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-carrot"></i> Products</a>
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-list-ul"></i> Lists</a>
+          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-chart-bar"></i> Stats</a>
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"><i class="fas fa-user-plus"></i> Register</a>
         </div>
       </div>      
