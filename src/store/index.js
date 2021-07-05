@@ -18,6 +18,14 @@ export default createStore({
     getProducts: (state) => {
       return state.products;
     },
+    getActiveListName: (state) => {
+      let act = state.lists.filter((list) => list.id == state.activeList);
+      if(act && act.length){
+        return act[0].name;
+      } else {
+        return null;
+      }
+    },
     getLists: (state) => {
       return state.lists;
     },

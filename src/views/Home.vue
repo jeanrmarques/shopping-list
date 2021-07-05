@@ -5,12 +5,15 @@
       <div class="row align-items-center justify-content-center">
         <div class="col-lg-6">
           <div v-if="activeList" class="card">
+            <div class="card-header">
+              <h5><i class="fas fa-list-ul"></i> {{ getActiveListName }}</h5>
+              <i class="fas fa-times"></i>
+            </div>
             <div class="card-body">
               <!-- Add item component -->
               <div class="AddItem">
-                <h4>Add Item to the list</h4>
                 <select v-if="getProductsNotInList(activeList).length > 0" class="form-select form-select-lg mb-3" @change="addItemToList(activeList, $event)">
-                  <option value=null >Select an existing product or...</option>
+                  <option value=null >Select an existing product to add it to the list or...</option>
                   <option
                     :key="index"
                     v-for="(p, index) in getProductsNotInList(activeList)"
@@ -101,20 +104,20 @@
                     </div>
                   </li>
                 </ul>
-                <div class="listTotal">
-                  Total: $ {{ totalOnList(activeList).bought }}
-                  <span
-                    v-if="
-                      totalOnList(activeList).potential !=
-                      totalOnList(activeList).bought
-                    "
-                    >(${{ totalOnList(activeList).potential }})</span
-                  >
-                </div>
               </div>
-
               <!-- -->
-
+            </div>
+            <div class="card-footer">
+              <div class="listTotal">
+                <i class="fas fa-coins"></i> Total: $ {{ totalOnList(activeList).bought }}
+                <span
+                  v-if="
+                    totalOnList(activeList).potential !=
+                    totalOnList(activeList).bought
+                  "
+                  >(${{ totalOnList(activeList).potential }})</span
+                >
+              </div>           
             </div>
           </div>
         </div>
@@ -159,10 +162,10 @@ export default {
       "setActiveList"
     ]),
     addItemToList(list, e) {
-      console.log(e);
       let product = e.target.value;
       console.log(list, product);
       this.addItem({ list, product });
+      e.target.value = "";
     },
     itemQuantityChange(item, e) {
       let qty = parseInt(e.target.value) || 0;
@@ -219,7 +222,8 @@ export default {
       "getProducts",
       "getProductsNotInList",
       "getLists",
-      "activeList"
+      "activeList",
+      "getActiveListName"
     ]),
     lists: {
       get() {
@@ -280,22 +284,30 @@ main.home {
   width: 53%;
 }
 
-.lists {
-  list-style: none;
-  padding: 0;
+.card {
+  h3,h4,h5 {
+    margin: 0;
+  }
 
-  .listTotal {
-    text-align: right;
-    padding: 1em;
-    background: #333;
-    color: #fff;
-    margin: 0 0.5em;
+  .card-header, .card-footer {
+    color: #FFF;
+    background: #114646;
   }
 }
+
+.listTotal {
+  text-align: right;
+  font-size: 1.5em;
+  font-weight: bold;
+  // padding: 1em;
+  // background: #333;
+  // color: #fff;
+  // margin: 0 0.5em;
+}
+
 ul.productsOnList {
   list-style: none;
   text-align: left;
-  padding: 0.5em;
 
   li {
     padding: 1em;
