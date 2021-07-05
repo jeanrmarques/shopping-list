@@ -26,6 +26,14 @@ export default createStore({
         return null;
       }
     },
+    getListName: (state) => (id) => {
+      let act = state.lists.filter((list) => list.id == id);
+      if(act && act.length){
+        return act[0].name;
+      } else {
+        return null;
+      }
+    },    
     getLists: (state) => {
       return state.lists;
     },
@@ -175,7 +183,6 @@ export default createStore({
     // Interactions
     addProduct({ commit }, { name }) {
       let id = Math.floor(Math.random() * 100000);
-      console.log(name);
       let product = {
         id: id,
         name: name,
@@ -183,12 +190,9 @@ export default createStore({
         checked: false,
         category: 0,
       };
-      console.log("adding product: ");
-      console.log(product);
       commit("addProduct", product);
     },
     newProductInList({ commit }, {list, name, quantity, price}){
-      console.log(list, name, quantity, price);
       let id = Math.floor(Math.random() * 100000);
       let item_id = Math.floor(Math.random() * 100000);
       let product = {
@@ -223,7 +227,6 @@ export default createStore({
 
     addItem({ commit }, { list, product }) {
       let id = Math.floor(Math.random() * 100000);
-      console.log(list, product);
       let item = {
         id: id,
         list: list,
@@ -232,8 +235,6 @@ export default createStore({
         quantity: 1,
         price: 0.0,
       };
-      console.log("adding item: ");
-      console.log(item);
       commit("addItem", item);
     },
     removeItem({ commit }, item) {
@@ -250,7 +251,6 @@ export default createStore({
     },
 
     setActiveList({ commit }, id) {
-      console.log(id);
       commit("setActiveList", id);
     }
   },

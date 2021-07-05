@@ -47,15 +47,12 @@ export default {
       "setActiveList"
     ]),
     selectedList(e) {
-      console.log('selected list...');
-      console.log(e);
       let list_id = e.target.value;
       if(list_id && list_id.length > 0){
         this.setActiveList(list_id);
       } else {
         this.setActiveList(null);
       }
-      console.log(list_id);
     },    
   },
   computed: {
