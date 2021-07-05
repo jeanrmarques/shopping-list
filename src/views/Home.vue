@@ -7,7 +7,7 @@
           <div v-if="activeList" class="card">
             <div class="card-header">
               <h5><i class="fas fa-list-ul"></i> {{ getActiveListName }}</h5>
-              <i class="fas fa-times"></i>
+              <i id="btnDeleteList" class="fas fa-times"></i>
             </div>
             <div class="card-body">
               <!-- Add item component -->
@@ -30,12 +30,12 @@
                 <ul class="productsOnList list-group">
                   <!-- Add product -->
                   <li id="addItemRow" class="list-group-item">
-                    <span @click="newProductInList({list: activeList, ...newItemInList})" class="addItem btn btn-primary"
+                    <span @click="newProductInList({list: activeList, ...newItemInList})" class="addItem btn btn-success ms-3"
                       ><i class="fa fa-plus"></i
                     ></span>
                     <input
-                      id="newProductPrice"
-                      class="form-control"
+                      id="newProductQty"
+                      class="form-control me-3"
                       type="number"
                       min="0"
                       v-model="newItemInList.quantity"
@@ -67,7 +67,7 @@
                   >
                     <span
                       @click="removeItem(p.data)"
-                      class="removeItem btn btn-primary"
+                      class="removeItem btn btn-danger ms-3"
                       ><i class="fa fa-times"></i
                     ></span>
                     <div class="form-check form-check-inline">
@@ -79,7 +79,7 @@
                       />
                     </div>
                     <input
-                      class="form-control"
+                      class="form-control me-3"
                       type="number"
                       min="0"
                       :value="p.data.quantity"
@@ -281,7 +281,7 @@ main.home {
 
 #newProductName {
   display: inline-block;
-  width: 53%;
+  width: 45%;
 }
 
 .card {
@@ -290,8 +290,23 @@ main.home {
   }
 
   .card-header, .card-footer {
+    position: relative;
     color: #FFF;
     background: #114646;
+    #btnDeleteList {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translate(-100%, -50%);
+      cursor: pointer;
+    }
+  }
+
+  .card-footer {
+    i {
+      float: left;
+      margin-top: .3em;
+    }
   }
 }
 
@@ -312,6 +327,9 @@ ul.productsOnList {
   li {
     padding: 1em;
     background: #ccc;
+    .btn {
+      float: right;
+    }
     input[type="number"] {
       display: inline-block;
       max-width: 60px;
