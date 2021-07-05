@@ -1,77 +1,76 @@
 <template>
-    <div v-if="activeList" class="card">
+  <div v-if="activeList" class="card">
     <div class="card-header">
-        <h5><i class="fas fa-list-ul"></i> {{ getListName(activeList) }}</h5>
-        <i id="btnDeleteList" class="fas fa-times"></i>
+      <h5><i class="fas fa-list-ul"></i> {{ getListName(activeList) }}</h5>
+      <i id="btnDeleteList" class="fas fa-times"></i>
     </div>
     <div class="card-body">
-        <AddItem :activeList="activeList" />
+      <AddItem :activeList="activeList" />
 
-        <!-- List component -->
-        <div class="activeList">
+      <!-- List component -->
+      <div class="activeList">
         <ul class="productsOnList list-group">
-            <li
+          <li
             class="list-group-item"
             :key="index"
             v-for="(p, index) in itemsInList(activeList)"
-            >
+          >
             <span
-                @click="removeItem(p.data)"
-                class="removeItem btn btn-danger ms-3"
-                ><i class="fa fa-times"></i
+              @click="removeItem(p.data)"
+              class="removeItem btn btn-danger ms-3"
+              ><i class="fa fa-times"></i
             ></span>
             <div class="form-check form-check-inline">
-                <input
+              <input
                 class="form-check-input"
                 type="checkbox"
                 :checked="p.data.checked"
                 @change="toggleItem(p.data)"
-                />
+              />
             </div>
             <input
-                class="form-control me-3"
-                type="number"
-                min="0"
-                :value="p.data.quantity"
-                @change="itemQuantityChange(p.data, $event)"
-                @keyup="itemQuantityChange(p.data, $event)"
+              class="form-control me-3"
+              type="number"
+              min="0"
+              :value="p.data.quantity"
+              @change="itemQuantityChange(p.data, $event)"
+              @keyup="itemQuantityChange(p.data, $event)"
             />
             <span class="productName">
-                {{ p.details.name }}
+              {{ p.details.name }}
             </span>
             <div class="price">
-                $
-                <input
+              $
+              <input
                 class="form-control"
                 type="number"
                 min="0"
                 step=".01"
                 :value="p.data.price"
                 @change="itemPriceChange(p.data, $event)"
-
-                />
-                = [ $ {{ (p.data.price * p.data.quantity).toFixed(2) }} ]
+              />
+              = [ $ {{ (p.data.price * p.data.quantity).toFixed(2) }} ]
             </div>
-            </li>
+          </li>
         </ul>
-        </div>
-        <!-- -->
+      </div>
+      <!-- -->
     </div>
     <div class="card-footer">
-        <div class="listTotal">
-        <i class="fas fa-coins"></i> Total: $ {{ totalOnList(activeList).bought }}
+      <div class="listTotal">
+        <i class="fas fa-coins"></i> Total: $
+        {{ totalOnList(activeList).bought }}
         <span
-            v-if="
-            totalOnList(activeList).potential !=
-            totalOnList(activeList).bought
-            "
-            >(${{ totalOnList(activeList).potential }})</span
+          v-if="
+            totalOnList(activeList).potential != totalOnList(activeList).bought
+          "
+          >(${{ totalOnList(activeList).potential }})</span
         >
-        </div>           
+      </div>
     </div>
-    </div>
+  </div>
 </template>
- 
+
 <script>
 // @ is an alias to /src
 import AddItem from "@/components/AddItem.vue";
@@ -83,12 +82,10 @@ export default {
     activeList: String,
   },
   data() {
-    return {
-
-    };
+    return {};
   },
   components: {
-    AddItem
+    AddItem,
   },
   methods: {
     ...mapActions([
@@ -142,11 +139,8 @@ export default {
     },
   },
   computed: {
-    ...mapGetters([
-      "itemsInList",
-      "getListName"
-    ]),
-  }
+    ...mapGetters(["itemsInList", "getListName"]),
+  },
 };
 </script>
 
@@ -156,13 +150,16 @@ export default {
 }
 
 .card {
-  h3,h4,h5 {
+  h3,
+  h4,
+  h5 {
     margin: 0;
   }
 
-  .card-header, .card-footer {
+  .card-header,
+  .card-footer {
     position: relative;
-    color: #FFF;
+    color: #fff;
     background: #114646;
     #btnDeleteList {
       position: absolute;
@@ -176,7 +173,7 @@ export default {
   .card-footer {
     i {
       float: left;
-      margin-top: .3em;
+      margin-top: 0.3em;
     }
   }
 }

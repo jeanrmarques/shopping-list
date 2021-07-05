@@ -15,23 +15,19 @@
 
 <script>
 // @ is an alias to /src
-import ListComponent from '@/components/ListComponent.vue';
+import ListComponent from "@/components/ListComponent.vue";
 import { mapGetters } from "vuex";
 
 export default {
   name: "Home",
   data() {
-    return {
-
-    };
+    return {};
   },
   components: {
-    ListComponent
+    ListComponent,
   },
   computed: {
-    ...mapGetters([
-      "activeList",
-    ]),
+    ...mapGetters(["activeList"]),
   },
   async created() {
     this.$store.dispatch("fetchUsers");
@@ -42,6 +38,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

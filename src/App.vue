@@ -12,8 +12,8 @@ import Header from "@/components/Header.vue";
 export default {
   name: "App",
   components: {
-    Header
-  }
+    Header,
+  },
 };
 </script>
 
@@ -29,7 +29,7 @@ article#root {
 }
 
 .bg-image {
-  background: url('./assets/busyconsumers_0.jpg') no-repeat;
+  background: url("./assets/busyconsumers_0.jpg") no-repeat;
   background-size: cover;
   z-index: 1;
   position: fixed;
@@ -37,8 +37,8 @@ article#root {
   display: block;
   width: 105vw;
   height: 105vh;
-  filter: blur(5px) grayscale(.9);
-  top: -2.5vh;  
+  filter: blur(5px) grayscale(0.9);
+  top: -2.5vh;
 }
 
 #app {
@@ -49,6 +49,6 @@ article#root {
   color: var(--dark);
   position: relative;
   z-index: 2;
-  background: #1146467a;  
+  background: #1146467a;
 }
 </style>

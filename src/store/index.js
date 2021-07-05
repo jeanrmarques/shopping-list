@@ -20,7 +20,7 @@ export default createStore({
     },
     getActiveListName: (state) => {
       let act = state.lists.filter((list) => list.id == state.activeList);
-      if(act && act.length){
+      if (act && act.length) {
         return act[0].name;
       } else {
         return null;
@@ -28,12 +28,12 @@ export default createStore({
     },
     getListName: (state) => (id) => {
       let act = state.lists.filter((list) => list.id == id);
-      if(act && act.length){
+      if (act && act.length) {
         return act[0].name;
       } else {
         return null;
       }
-    },    
+    },
     getLists: (state) => {
       return state.lists;
     },
@@ -128,7 +128,7 @@ export default createStore({
 
     setActiveList(state, id) {
       state.activeList = id;
-    }
+    },
   },
   actions: {
     // Setting up our store with data from the database
@@ -192,7 +192,7 @@ export default createStore({
       };
       commit("addProduct", product);
     },
-    newProductInList({ commit }, {list, name, quantity, price}){
+    newProductInList({ commit }, { list, name, quantity, price }) {
       let id = Math.floor(Math.random() * 100000);
       let item_id = Math.floor(Math.random() * 100000);
       let product = {
@@ -208,8 +208,8 @@ export default createStore({
         product: id,
         checked: false,
         quantity: quantity || 1,
-        price: price || 0.00,
-      };        
+        price: price || 0.0,
+      };
       commit("addProduct", product);
       commit("addItem", item);
     },
@@ -252,7 +252,7 @@ export default createStore({
 
     setActiveList({ commit }, id) {
       commit("setActiveList", id);
-    }
+    },
   },
   modules: {},
 });
