@@ -7,15 +7,13 @@
     <div class="card-body">
       <AddItem :activeList="activeList" />
       <div class="activeList">
-        <ul class="productsOnList list-group">
-          <li
-            class="list-group-item"
+        <div class="productsOnList list-group">
+          <ListItemComponent 
             :key="index"
             v-for="(p, index) in itemsInList(activeList)"
-          >
-            <ListItemComponent :p="p" />
-          </li>
-        </ul>
+            :p="p"
+            />
+        </div>
       </div>
     </div>
     <div class="card-footer">
@@ -82,15 +80,6 @@ export default {
       transform: translate(-100%, -50%);
       cursor: pointer;
     }
-  }
-}
-
-ul.productsOnList {
-  list-style: none;
-  text-align: left;
-
-  .list-group-item {
-    padding: 0.5em;
   }
 }
 </style>

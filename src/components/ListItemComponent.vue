@@ -1,5 +1,7 @@
 <template>
-  <div class="list-item">
+  <div 
+    :class="[p.data.checked ? 'filled' : '', 'list-group-item']"
+  >
     <span @click="removeItem(p.data)" class="removeItem btn btn-danger"
       ><i class="fa fa-times"></i
     ></span>
@@ -16,6 +18,7 @@
       type="number"
       min="0"
       :value="p.data.quantity"
+      :disabled="p.data.checked == true"
       @change="itemQuantityChange(p.data, $event)"
       @keyup="itemQuantityChange(p.data, $event)"
     />
@@ -30,6 +33,7 @@
         min="0"
         step=".01"
         :value="p.data.price"
+        :disabled="p.data.checked == true"
         @change="itemPriceChange(p.data, $event)"
       />
       <input
@@ -78,22 +82,46 @@ export default {
   display: inline-block !important;
 }
 
-.list-item {
+.list-group-item {
   background: var(--light);
+  text-align: left;
+
+  &.filled {
+    background: var(--green);
+    color: var(--light);
+
+    input[type="text"],
+    input[type="number"]{
+      background: transparent;
+      border-color: transparent;
+      color: var(--light);
+    }
+  }
 
   .form-check-inline {
     float: left;
     margin-right: 0.6em;
   }
 
+  input {
+    box-shadow: none !important;
+  }
+
   .form-check-input {
     width: 2em;
     height: 2em;
     border-radius: 50%;
+    cursor: pointer;
+    transition: all .2s linear;
 
     &:checked {
       background-color: var(--green);
-      border-color: var(--darkgreen);
+      border-color: transparent;
+      transform: scale(1.5);
+    }
+
+    &:hover {
+      background-color: var(--green);
     }
   }
   .btn {
