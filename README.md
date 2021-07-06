@@ -1,9 +1,19 @@
 # Shopping Tracker App
+```
+The goal of this tool is to provide help while doing your shopping, while keeping track of your buying habits and generating stats of them.
 
-## Run backend
+I mean, who doesn't want to know EXACTLY how much they spend on cheese in a year?
+```
+
+## Run backend (Disabled for now)
 ```
 From /server
 npm run dev
+```
+## JSON Server (Development Database API)
+```
+npm install json-server
+json-server --watch db.json
 ```
 
 ## Project setup
