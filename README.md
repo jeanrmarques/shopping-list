@@ -1,9 +1,9 @@
 # Shopping Tracker App
-```
+
 The goal of this tool is to provide help while doing your shopping, while keeping track of your buying habits and generating stats of them.
 
 I mean, who doesn't want to know EXACTLY how much they spend on cheese in a year?
-```
+
 
 ## Run backend (Disabled for now)
 ```
