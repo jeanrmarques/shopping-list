@@ -84,7 +84,7 @@ export default {
   name: "Header",
   props: {
     title: String,
-    userMode: Boolean
+    userMode: Boolean,
   },
   methods: {
     ...mapActions(["setActiveList"]),
