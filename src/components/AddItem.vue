@@ -1,64 +1,77 @@
 <template>
-  <div class="AddItem">
-    <select
-      v-if="getProductsNotInList(activeList).length > 0"
-      class="form-select form-select-lg mb-3"
-      @change="addItemToList(activeList, $event)"
-    >
-      <option value="null">
-        Select an existing product to add it to the list or...
-      </option>
-      <option
-        :key="index"
-        v-for="(p, index) in getProductsNotInList(activeList)"
-        :value="p.id"
-      >
-        {{ p.name }}
-      </option>
-    </select>
-    <div id="addItemRow">
-      <span
-        @click="newProductInList({ list: activeList, ...newItemInList })"
-        class="addItem btn btn-success ms-3"
-        ><i class="fa fa-plus"></i
-      ></span>
-      <div class="form-check form-switch">
+  <ul class="list-group">
+    <li class="list-group-item">
+      <div class="list-item">
+        <span @click="addToList()" class="addItem btn btn-success ms-3"
+          ><i class="fa fa-plus"></i
+        ></span>
         <input
-          class="form-check-input"
-          type="checkbox"
-          id="flexSwitchCheckDefault"
-        />
-        <label class="form-check-label" for="flexSwitchCheckDefault"
-          >Default switch checkbox input</label
-        >
-      </div>
-      <input
-        id="newProductQty"
-        class="form-control me-3"
-        type="number"
-        min="0"
-        v-model="newItemInList.quantity"
-      />
-      <input
-        type="text"
-        id="newProductName"
-        class="form-control"
-        placeholder="Add a new product"
-        v-model="newItemInList.name"
-      />
-      <div class="price">
-        $
-        <input
-          id="newProductPrice"
-          class="form-control"
+          class="form-control input-quantity me-3"
           type="number"
           min="0"
-          step=".01"
-          v-model="newItemInList.price"
+          v-model="newItemInList.quantity"
         />
+        <div v-if="!addNew" class="input-product">
+          <select
+            class="form-select form-select"
+            v-model="newItemInList.product"
+          >
+            <option value="null">Select a product</option>
+            <option
+              :key="index"
+              v-for="(p, index) in getProductsNotInList(activeList)"
+              :value="p.id"
+            >
+              {{ p.name }}
+            </option>
+          </select>
+          <span
+            class="
+              position-absolute
+              top-0
+              start-0
+              translate-middle
+              badge
+              rounded-pill
+              bg-success
+            "
+          >
+            {{ getProductsNotInList(activeList).length }}
+          </span>
+        </div>
+
+        <input
+          v-else
+          type="text"
+          id="newProductName"
+          class="form-control input-product"
+          placeholder="Add a new product"
+          v-model="newItemInList.name"
+        />
+        <div v-if="switchEnabled" class="form-check form-switch">
+          <input
+            title="New Product"
+            class="form-check-input"
+            type="checkbox"
+            id="flexSwitchCheckDefault"
+            v-model="addNew"
+            @change="clearForm()"
+          />
+          <label for="">New</label>
+        </div>
+        <div class="price">
+          $
+          <input
+            class="form-control"
+            type="number"
+            min="0"
+            step=".01"
+            v-model="newItemInList.price"
+          />
+        </div>
       </div>
-    </div>
-  </div>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -75,27 +88,127 @@ export default {
         name: "",
         quantity: 1,
         price: 0,
-        id: null,
+        product: "null",
       },
+      addNew: false,
     };
   },
   methods: {
     ...mapActions(["newProductInList", "addItem"]),
-    addItemToList(list, e) {
-      let product = e.target.value;
-      this.addItem({ list, product });
-      e.target.value = "";
+    addToList() {
+      let obj = { list: this.activeList, ...this.newItemInList };
+      console.log(obj);
+      if (this.addNew) {
+        this.newProductInList(obj);
+      } else {
+        this.addItem(obj);
+      }
+      if (this.getProductsNotInList(this.activeList).length < 1) {
+        this.addNew = true;
+      }
+      this.clearForm();
+    },
+    clearForm() {
+      this.newItemInList = {
+        name: "",
+        quantity: 1,
+        price: 0,
+        product: "null",
+      };
     },
   },
   computed: {
     ...mapGetters(["getProductsNotInList"]),
+    switchEnabled: function () {
+      if (this.getProductsNotInList(this.activeList).length < 1) {
+        return false;
+      } else {
+        return true;
+      }
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
-#newProductName {
+.list-group {
+  margin-bottom: 1em;
+
+  .list-group-item {
+    padding: 1em 0.5em 0.5em;
+  }
+}
+
+.form-check-input {
+  &:checked {
+    background-color: var(--green);
+    border-color: var(--darkgreen);
+  }
+}
+
+.input-product {
+  width: 100%;
+  max-width: 45%;
   display: inline-block;
-  width: 45%;
+  position: relative;
+}
+
+.list-item {
+  background: var(--light);
+  text-align: left;
+
+  .form-switch {
+    position: relative;
+    display: inline-block;
+    margin-left: 0.5em;
+
+    label {
+      font-size: 0.8em;
+    }
+  }
+
+  .form-check-inline {
+    float: left;
+    margin-right: 0.6em;
+  }
+
+  .btn {
+    float: right;
+  }
+
+  .removeItem {
+    transform: scale(0.6);
+    border-radius: 50%;
+  }
+
+  input.sum {
+    max-width: 5em;
+    display: inline;
+  }
+
+  input[type="number"] {
+    display: inline-block;
+    max-width: 4em;
+    width: auto;
+    text-align: left;
+    padding-right: 0;
+
+    &.input-quantity {
+      max-width: 2.5em;
+    }
+  }
+
+  .price {
+    float: right;
+    input[type="number"] {
+      display: inline-block;
+      width: auto;
+      text-align: left;
+    }
+
+    .history {
+      font-size: 0.5em;
+    }
+  }
 }
 </style>

@@ -25,6 +25,9 @@ export default {
   --main: #095bad;
   --secondary: #3593e0;
   --dark: #333;
+  --green: #114646;
+  --darkgreen: #0c3535;
+  --light: #fff;
 }
 
 article#root {

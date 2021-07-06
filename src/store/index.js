@@ -255,15 +255,15 @@ export default createStore({
       });
     },
 
-    addItem({ commit }, { list, product }) {
+    addItem({ commit }, { list, product, quantity, price }) {
       let id = Math.floor(Math.random() * 100000);
       let item = {
         id: id,
         list: list,
         product: product,
         checked: false,
-        quantity: 1,
-        price: 0.0,
+        quantity: quantity,
+        price: price,
       };
       commit("addItem", item);
     },

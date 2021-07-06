@@ -88,5 +88,9 @@ export default {
 ul.productsOnList {
   list-style: none;
   text-align: left;
+
+  .list-group-item {
+    padding: 0.5em;
+  }
 }
 </style>

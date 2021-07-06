@@ -1,6 +1,6 @@
 <template>
   <div class="list-item">
-    <span @click="removeItem(p.data)" class="removeItem btn btn-danger ms-3"
+    <span @click="removeItem(p.data)" class="removeItem btn btn-danger"
       ><i class="fa fa-times"></i
     ></span>
     <div class="form-check form-check-inline">
@@ -12,7 +12,7 @@
       />
     </div>
     <input
-      class="form-control me-3"
+      class="form-control input-quantity me-2"
       type="number"
       min="0"
       :value="p.data.quantity"
@@ -32,7 +32,12 @@
         :value="p.data.price"
         @change="itemPriceChange(p.data, $event)"
       />
-      = [ $ {{ (p.data.price * p.data.quantity).toFixed(2) }} ]
+      <input
+        class="form-control sum"
+        type="text"
+        readonly
+        :value="'$ ' + (p.data.price * p.data.quantity).toFixed(2)"
+      />
     </div>
   </div>
 </template>
@@ -74,24 +79,53 @@ export default {
 }
 
 .list-item {
-  background: #fff;
+  background: var(--light);
 
+  .form-check-inline {
+    float: left;
+    margin-right: 0.6em;
+  }
+
+  .form-check-input {
+    width: 2em;
+    height: 2em;
+    border-radius: 50%;
+
+    &:checked {
+      background-color: var(--green);
+      border-color: var(--darkgreen);
+    }
+  }
   .btn {
     float: right;
   }
 
+  .removeItem {
+    transform: scale(0.6);
+    border-radius: 50%;
+  }
+
+  input.sum {
+    max-width: 5em;
+    display: inline;
+  }
+
   input[type="number"] {
     display: inline-block;
-    max-width: 60px;
+    max-width: 4em;
     width: auto;
     text-align: left;
+    padding-right: 0;
+
+    &.input-quantity {
+      max-width: 2.5em;
+    }
   }
 
   .price {
     float: right;
     input[type="number"] {
       display: inline-block;
-      max-width: 100px;
       width: auto;
       text-align: left;
     }
