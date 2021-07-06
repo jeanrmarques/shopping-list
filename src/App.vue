@@ -1,6 +1,6 @@
 <template>
   <article id="root">
-    <Header title="Shopping Tracker" />
+    <Header title="Shopping Tracker" userMode />
     <router-view />
     <Footer copyright="2021" />
   </article>

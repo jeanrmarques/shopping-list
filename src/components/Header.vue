@@ -49,6 +49,7 @@
             ><i class="fas fa-chart-bar"></i> Stats</a
           >
           <a
+            v-if="userMode"
             class="nav-link disabled"
             href="#"
             tabindex="-1"
@@ -58,7 +59,7 @@
         </div>
       </div>
       <form class="d-flex">
-        <a href="#" class="btn btn-dark me-3"
+        <a v-if="userMode" href="#" class="btn btn-dark me-3"
           ><i class="fas fa-sign-in-alt"></i> Login</a
         >
         <div class="Select List">
@@ -83,6 +84,7 @@ export default {
   name: "Header",
   props: {
     title: String,
+    userMode: Boolean
   },
   methods: {
     ...mapActions(["setActiveList"]),
