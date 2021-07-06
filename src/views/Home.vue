@@ -5,9 +5,6 @@
         <div class="col-lg-6">
           <ListComponent :activeList="activeList" />
         </div>
-        <!-- <div class="col-lg-6">
-          <ListComponent activeList="64545637654674" />
-        </div> -->
       </div>
     </div>
   </main>

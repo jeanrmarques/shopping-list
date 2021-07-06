@@ -1,7 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container-fluid">
-      <span class="badge bg-warning text-dark">BETA</span>
       <a class="navbar-brand me-3 ms-3"
         ><i class="fas fa-shopping-basket"></i> {{ title }}
       </a>

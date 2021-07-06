@@ -53,6 +53,25 @@ export default createStore({
       }
       return res;
     },
+    getTotals: (state, getters) => (id) => {
+      let items = getters.itemsInList(id);
+      let sum = parseFloat(0).toFixed(2);
+      let checked = parseFloat(0).toFixed(2);
+      let len = items.length;
+      for (let i = 0; i < len; i++) {
+        sum = (
+          parseFloat(sum) +
+          parseFloat(items[i].data.price * items[i].data.quantity)
+        ).toFixed(2);
+        if (items[i].data.checked) {
+          checked = (
+            parseFloat(checked) +
+            parseFloat(items[i].data.price * items[i].data.quantity)
+          ).toFixed(2);
+        }
+      }
+      return { potential: sum, bought: checked };
+    },
     productDetail: (state) => (id) => {
       return state.products.find((product) => product.id === id);
     },
@@ -68,6 +87,17 @@ export default createStore({
         resp.push(item);
       }
       return resp;
+    },
+    getItem: (state, getters) => (id) => {
+      let itemData = state.items.find((item) => item.id == id);
+      if (itemData) {
+        let details = getters.productDetail(itemData.product);
+        let item = {
+          data: itemData,
+          details: details,
+        };
+        return item;
+      }
     },
   },
   mutations: {
