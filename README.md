@@ -1,4 +1,4 @@
-# shopping-list
+# Shopping Tracker App
 
 ## Run backend
 ```
