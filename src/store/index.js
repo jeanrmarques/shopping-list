@@ -6,12 +6,19 @@ import {
   ItemService,
 } from "../backendService";
 
+const STORAGE_KEY_PRODUCTS = "shoppinglist-products";
+const STORAGE_KEY_LISTS = "shoppinglist-lists";
+const STORAGE_KEY_ITEMS = "shoppinglist-items";
+const STORAGE_KEY_USERS = "shoppinglist-users";
+
 export default createStore({
   state: {
-    products: [],
-    items: [],
-    lists: [],
-    users: [],
+    products: JSON.parse(
+      window.localStorage.getItem(STORAGE_KEY_PRODUCTS) || "[]"
+    ),
+    items: JSON.parse(window.localStorage.getItem(STORAGE_KEY_ITEMS) || "[]"),
+    lists: JSON.parse(window.localStorage.getItem(STORAGE_KEY_LISTS) || "[]"),
+    users: JSON.parse(window.localStorage.getItem(STORAGE_KEY_USERS) || "[]"),
     activeList: null,
   },
   getters: {
@@ -211,16 +218,38 @@ export default createStore({
     },
 
     // Interactions
-    addProduct({ commit }, { name }) {
+    addProduct({ commit }, { name, brand, category }) {
       let id = Math.floor(Math.random() * 100000);
       let product = {
         id: id,
         name: name,
-        brand: "",
-        checked: false,
-        category: 0,
+        brand: brand || "",
+        category: category || null,
       };
       commit("addProduct", product);
+      return id;
+    },
+    async addNewProduct(
+      { commit },
+      { name, brand, category, quantity, unit, price }
+    ) {
+      let resp;
+      let product = {
+        name: name,
+        brand: brand || "",
+        category: category || null,
+        quantity: quantity || 0,
+        unit: unit || "g",
+        price: price || 0,
+      };
+
+      try {
+        resp = await ProductService.addProduct(product);
+        console.log(resp.data);
+        commit("addProduct", resp.data);
+      } catch (err) {
+        return;
+      }
     },
     newProductInList({ commit }, { list, name, quantity, price }) {
       let id = Math.floor(Math.random() * 100000);
@@ -229,7 +258,6 @@ export default createStore({
         id: id,
         name: name,
         brand: "",
-        checked: false,
         category: 0,
       };
       let item = {
@@ -285,4 +313,11 @@ export default createStore({
     },
   },
   modules: {},
+  plugins: [
+    (store) => {
+      store.subscribe((mutation, { items }) => {
+        window.localStorage.setItem(STORAGE_KEY_ITEMS, JSON.stringify(items));
+      });
+    },
+  ],
 });

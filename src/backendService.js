@@ -2,6 +2,7 @@ import axios from "axios";
 
 // const url = "http://localhost:5555/api/";
 const url = "http://localhost:3000/";
+// const url = "http://192.168.100.15:3000/";
 
 const user_url = url + "users";
 const product_url = url + "products";
@@ -51,9 +52,7 @@ class ProductService {
   static addProduct(product) {
     console.log("addProduct API");
     console.log(product);
-    return axios.post(product_url, {
-      product,
-    });
+    return axios.post(product_url, product);
   }
 
   // Get Products

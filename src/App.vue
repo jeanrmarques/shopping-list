@@ -17,6 +17,12 @@ export default {
     Header,
     Footer,
   },
+  async created() {
+    this.$store.dispatch("fetchUsers");
+    this.$store.dispatch("fetchLists");
+    this.$store.dispatch("fetchProducts");
+    this.$store.dispatch("fetchItems");
+  },
 };
 </script>
 

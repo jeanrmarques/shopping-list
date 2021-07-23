@@ -2,7 +2,7 @@
   <main class="home">
     <div class="container">
       <div class="row align-items-center justify-content-center">
-        <div class="col-lg-6">
+        <div class="col-lg-10">
           <ListComponent :activeList="activeList" />
         </div>
       </div>
@@ -25,12 +25,6 @@ export default {
   },
   computed: {
     ...mapGetters(["activeList"]),
-  },
-  async created() {
-    this.$store.dispatch("fetchUsers");
-    this.$store.dispatch("fetchLists");
-    this.$store.dispatch("fetchProducts");
-    this.$store.dispatch("fetchItems");
   },
 };
 </script>

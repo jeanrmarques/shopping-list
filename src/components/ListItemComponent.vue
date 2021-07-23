@@ -1,7 +1,5 @@
 <template>
-  <div 
-    :class="[p.data.checked ? 'filled' : '', 'list-group-item']"
-  >
+  <div :class="[p.data.checked ? 'filled' : '', 'list-group-item']">
     <span @click="removeItem(p.data)" class="removeItem btn btn-danger"
       ><i class="fa fa-times"></i
     ></span>
@@ -91,7 +89,7 @@ export default {
     color: var(--light);
 
     input[type="text"],
-    input[type="number"]{
+    input[type="number"] {
       background: transparent;
       border-color: transparent;
       color: var(--light);
@@ -112,7 +110,7 @@ export default {
     height: 2em;
     border-radius: 50%;
     cursor: pointer;
-    transition: all .2s linear;
+    transition: all 0.2s linear;
 
     &:checked {
       background-color: var(--green);

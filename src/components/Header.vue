@@ -17,8 +17,10 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-link active" aria-current="page" href="#"
-            ><i class="fas fa-home"></i> Home</a
+          <router-link
+            :class="[$route.name == 'Home' ? 'active' : '', 'nav-link']"
+            to="/"
+            ><i class="fas fa-home"></i> Home</router-link
           >
           <a
             class="nav-link disabled"
@@ -27,12 +29,10 @@
             aria-disabled="true"
             ><i class="fas fa-info"></i> About</a
           >
-          <a
-            class="nav-link disabled"
-            href="#"
-            tabindex="-1"
-            aria-disabled="true"
-            ><i class="fas fa-carrot"></i> Products</a
+          <router-link
+            :class="[$route.name == 'Products' ? 'active' : '', 'nav-link']"
+            to="/products"
+            ><i class="fas fa-carrot"></i> Products</router-link
           >
           <a
             class="nav-link disabled"
@@ -62,7 +62,7 @@
         <a v-if="userMode" href="#" class="btn btn-dark me-3"
           ><i class="fas fa-sign-in-alt"></i> Login</a
         >
-        <div class="Select List">
+        <div v-if="$route.name == 'Home'" class="Select List">
           <select
             class="form-select form-select"
             @change="selectedList($event)"

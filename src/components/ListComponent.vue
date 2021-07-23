@@ -8,16 +8,16 @@
       <AddItem :activeList="activeList" />
       <div class="activeList">
         <div class="productsOnList list-group">
-          <ListItemComponent 
+          <ListItemComponent
             :key="index"
             v-for="(p, index) in itemsInList(activeList)"
             :p="p"
-            />
+          />
         </div>
       </div>
     </div>
     <div class="card-footer">
-      <ListTotal :activeList="activeList" icon="true" />
+      <ListTotal :activeList="activeList" :icon="true" />
     </div>
   </div>
 </template>

@@ -17,34 +17,49 @@
       "name": "Ground Meat",
       "brand": null,
       "category": 2
-    }
-    ,
+    },
     {
       "id": "7865",
       "name": "Butter",
       "brand": null,
       "category": 2
-    }
-    ,
+    },
     {
       "id": "768970980",
       "name": "Eggs (6)",
       "brand": null,
       "category": 2
-    }
-    ,
+    },
     {
       "id": "121434",
       "name": "Flour",
       "brand": null,
       "category": 2
+    },
+    {
+      "name": "Shiitake",
+      "brand": "",
+      "category": "14",
+      "quantity": "100",
+      "unit": "g",
+      "price": 0,
+      "id": "Qr2H3PQ"
+    },
+    {
+      "name": "Large Eggs",
+      "brand": "Supermaxi",
+      "category": "8",
+      "quantity": "12",
+      "unit": "Un",
+      "price": 0,
+      "id": "qgzE_ji"
     }
   ],
   "lists": [
     {
       "owner": "60d89f5a983cb22b34e405a9",
       "name": "My Grocery List",
-      "active" : true,
+      "active": true,
       "budget": null,
       "createdAt": "2021-06-27T16:08:05.756Z",
       "id": "60d8a265983cb22b34e405ac"
@@ -52,12 +67,11 @@
     {
       "owner": "60d89f5a983cb22b34e405a9",
       "name": "Birthday Cake List",
-      "active" : true,
+      "active": true,
       "budget": null,
       "createdAt": "2021-06-27T16:08:05.756Z",
       "id": "64545637654674"
     }
-
   ],
   "items": [
     {
@@ -75,8 +89,7 @@
       "checked": false,
       "quantity": 1,
       "price": 1.09
-    } 
-    ,
+    },
     {
       "id": "3543",
       "list": "64545637654674",
@@ -84,7 +97,7 @@
       "checked": false,
       "quantity": 1,
       "price": 0.75
-    } 
+    }
   ],
   "users": [
     {
