@@ -8,6 +8,7 @@
         </div>
       </div>
       <div class="row mb-3">
+        <input v-model="product.id" type="hidden" />
         <div class="col-5">
           <label class="form-label">Brand</label>
           <input v-model="product.brand" type="text" class="form-control" />
@@ -67,19 +68,28 @@
         <div class="col-3">
           <label class="form-label">Price</label>
           <input
-            v-model="product.currentPrice"
+            v-model="product.price"
             type="number"
             min="0"
             class="form-control"
             step=".01"
           />
         </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-6">
+
+        </div>
+        <div class="col-3">        
+          <a v-if="product.id" @click="reset" class="w-100 btn btn-primary"
+            ><i class="fas fa-save"></i> Cancel</a
+          >
+        </div>        
         <div class="col-3">
-          <label class="form-label">&nbsp;</label><br />
           <a @click="save" class="w-100 btn btn-primary"
             ><i class="fas fa-save"></i> Save</a
           >
-        </div>
+        </div>        
       </div>
     </div>
   </div>
@@ -90,22 +100,34 @@ import { mapActions } from "vuex";
 
 export default {
   name: "addProduct",
+  props: {
+    editing: {
+      type: Object,
+    },
+  },
+  watch: {
+    editing: function () {
+      this.product = JSON.parse(JSON.stringify(this.editing));
+    },
+  },
   data() {
     return {
-      product: {
-        name: "",
-        brand: "",
-        category: "",
-        quantity: 0,
-        unit: null,
-        price: 0,
-      },
+      product: JSON.parse(JSON.stringify(this.editing)),
     };
   },
   methods: {
-    ...mapActions(["addProduct", "addNewProduct"]),
+    ...mapActions(["addProduct", "addNewProduct", "updateProduct"]),
     save() {
-      this.addNewProduct(this.product);
+      if (this.product.id) {
+        console.log("update");
+        this.updateProduct(this.product);
+      } else {
+        console.log("add");
+        this.addNewProduct(this.product);
+      }
+      this.reset();
+    },
+    reset() {
       this.product = {
         name: "",
         brand: "",
@@ -113,8 +135,10 @@ export default {
         quantity: 0,
         unit: null,
         price: 0,
+        id: null,
       };
-    },
+      this.$emit("savedproduct", this.product);
+    },    
   },
 };
 </script>

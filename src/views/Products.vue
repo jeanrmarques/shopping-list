@@ -4,12 +4,15 @@
       <div class="row align-items-start justify-content-center">
         <div class="col-lg-6">
           <div class="card">
-            <AddProduct />
+            <AddProduct
+              v-on:savedproduct="editing = $event"
+              v-bind:editing="editing"
+            />
           </div>
         </div>
         <div class="col-lg-6">
           <div class="card">
-            <ProductsListComponent />
+            <ProductsListComponent v-on:editproduct="editing = $event" />
           </div>
         </div>
       </div>
@@ -26,7 +29,17 @@ import { mapGetters } from "vuex";
 export default {
   name: "Products",
   data() {
-    return {};
+    return {
+      editing: {
+        name: "",
+        brand: "",
+        category: "",
+        quantity: 0,
+        unit: null,
+        price: 0,
+        id: null,
+      },
+    };
   },
   components: {
     ProductsListComponent,

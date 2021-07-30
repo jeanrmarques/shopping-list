@@ -1,6 +1,11 @@
 <template>
   <ul class="list-group">
-    <li class="list-group-item" :key="index" v-for="(p, index) in getProducts">
+    <li
+      @click="$emit('editproduct', p)"
+      class="list-group-item"
+      :key="index"
+      v-for="(p, index) in getProducts"
+    >
       {{ p.name }}
     </li>
   </ul>
@@ -16,6 +21,9 @@ export default {
   },
   methods: {
     ...mapActions(["newProductInList", "addItem"]),
+    selectProduct(p) {
+      console.log(p);
+    },
   },
   computed: {
     ...mapGetters(["getProducts"]),

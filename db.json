@@ -22,19 +22,28 @@
       "id": "7865",
       "name": "Butter",
       "brand": null,
-      "category": 2
+      "category": "8",
+      "price": "2.4",
+      "unit": "g",
+      "quantity": "200"
     },
     {
       "id": "768970980",
-      "name": "Eggs (6)",
+      "name": "Eggs",
       "brand": null,
-      "category": 2
+      "category": "8",
+      "quantity": "6",
+      "unit": "Un",
+      "price": ".79"
     },
     {
       "id": "121434",
       "name": "Flour",
-      "brand": null,
-      "category": 2
+      "brand": "Ya",
+      "category": "3",
+      "unit": "Kg",
+      "quantity": "2",
+      "price": "2.45"
     },
     {
       "name": "Shiitake",
@@ -42,8 +51,8 @@
       "category": "14",
       "quantity": "100",
       "unit": "g",
-      "price": 0,
-      "id": "Qr2H3PQ"
+      "id": "Qr2H3PQ",
+      "price": "5.5"
     },
     {
       "name": "Large Eggs",

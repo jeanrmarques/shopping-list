@@ -123,18 +123,12 @@ export default createStore({
     },
 
     // Basic mutations
-    editProduct(
-      state,
-      {
-        product,
-        name = product.name,
-        brand = product.brand,
-        category = product.category,
-      }
-    ) {
-      product.name = name;
-      product.brand = brand;
-      product.category = category;
+    editProduct(state, product) {
+      let prod_id = product.id;
+      let objIndex = state.products.findIndex((obj) => obj.id == prod_id);
+
+      console.log(state.products[objIndex]);
+      state.products[objIndex] = product;
     },
     addProduct(state, product) {
       state.products.push(product);
@@ -251,6 +245,17 @@ export default createStore({
         return;
       }
     },
+    async updateProduct({ commit }, product) {
+      let resp;
+
+      try {
+        resp = await ProductService.updateProduct(product);
+        console.log(resp.data);
+        commit("editProduct", resp.data);
+      } catch (err) {
+        return;
+      }
+    },
     newProductInList({ commit }, { list, name, quantity, price }) {
       let id = Math.floor(Math.random() * 100000);
       let item_id = Math.floor(Math.random() * 100000);
@@ -274,15 +279,6 @@ export default createStore({
     removeProduct({ commit }, product) {
       commit("removeProduct", product);
     },
-    updateProduct({ commit }, { product, name, brand, category }) {
-      commit("editProduct", {
-        product,
-        name: name,
-        brand: brand,
-        category: category,
-      });
-    },
-
     addItem({ commit }, { list, product, quantity, price }) {
       let id = Math.floor(Math.random() * 100000);
       let item = {

@@ -4,10 +4,10 @@ import axios from "axios";
 const url = "http://localhost:3000/";
 // const url = "http://192.168.100.15:3000/";
 
-const user_url = url + "users";
-const product_url = url + "products";
-const list_url = url + "lists";
-const item_url = url + "items";
+const user_url = url + "users/";
+const product_url = url + "products/";
+const list_url = url + "lists/";
+const item_url = url + "items/";
 
 class UserService {
   // Add User
@@ -68,10 +68,9 @@ class ProductService {
   static updateProduct(product) {
     console.log("updateProduct API");
     console.log(product);
+    let put_url = product_url + product.id;
 
-    return axios.put(product_url, {
-      product,
-    });
+    return axios.put(put_url, product);
   }
 
   // Delete Product
