@@ -21,7 +21,7 @@
       @keyup="itemQuantityChange(p.data, $event)"
     />
     <span class="productName">
-      {{ p.details.name }}
+      {{ p.details.brand }} {{ p.details.name +" "+ p.details.quantity + p.details.unit }}
     </span>
     <div class="price">
       $
@@ -146,6 +146,10 @@ export default {
     &.input-quantity {
       max-width: 2.5em;
     }
+  }
+
+  .productName {
+    text-transform: uppercase;
   }
 
   .price {

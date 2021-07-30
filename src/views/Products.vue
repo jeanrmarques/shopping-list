@@ -2,7 +2,7 @@
   <main class="products">
     <div class="container">
       <div class="row align-items-start justify-content-center">
-        <div class="col-lg-6">
+        <div class="col-lg-6 mb-3">
           <div class="card">
             <AddProduct
               v-on:savedproduct="editing = $event"
@@ -10,7 +10,7 @@
             />
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 mb-5">
           <div class="card">
             <ProductsListComponent v-on:editproduct="editing = $event" />
           </div>

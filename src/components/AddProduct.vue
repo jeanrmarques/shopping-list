@@ -79,13 +79,13 @@
         </div>
       </div>
       <div class="row mt-3">
-        <div class="col-6"></div>
-        <div class="col-3">
+        <div class="col-2 col-md-6"></div>
+        <div class="col-5 col-md-3">
           <a v-if="product.id" @click="reset" class="w-100 btn btn-primary"
             ><i class="fas fa-save"></i> Cancel</a
           >
         </div>
-        <div class="col-3">
+        <div class="col-5 col-md-3">
           <a @click="save" class="w-100 btn btn-primary"
             ><i class="fas fa-save"></i> Save</a
           >

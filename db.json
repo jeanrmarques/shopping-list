@@ -4,19 +4,28 @@
       "id": "60d8659f1f060c1f3c309042",
       "name": "Cheese",
       "brand": "La Holandesa",
-      "category": 1
+      "category": "8",
+      "quantity": "700",
+      "unit": "g",
+      "price": "5.5"
     },
     {
       "id": "60d8a0e2983cb22b34e405aa",
       "name": "Milk",
       "brand": "Tru",
-      "category": 1
+      "category": "8",
+      "quantity": "1",
+      "unit": "L",
+      "price": "1.09"
     },
     {
       "id": "60d8a114983cb22b34e405ab",
       "name": "Ground Meat",
-      "brand": null,
-      "category": 2
+      "brand": "Supermaxi",
+      "category": "15",
+      "quantity": "400",
+      "unit": "g",
+      "price": "1.65"
     },
     {
       "id": "7865",

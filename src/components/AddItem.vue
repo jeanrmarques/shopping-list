@@ -15,6 +15,7 @@
           <select
             class="form-select form-select"
             v-model="newItemInList.product"
+            @change="selected"
           >
             <option value="null">Select a product</option>
             <option
@@ -22,7 +23,7 @@
               v-for="(p, index) in getProductsNotInList(activeList)"
               :value="p.id"
             >
-              {{ p.name }}
+              {{ p.brand }} {{ p.name +" "+ p.quantity + p.unit }} (${{ p.price}})
             </option>
           </select>
           <span
@@ -95,6 +96,10 @@ export default {
   },
   methods: {
     ...mapActions(["newProductInList", "addItem"]),
+    selected() {
+      let selectedProd = this.productDetail(this.newItemInList.product);
+      this.newItemInList.price = selectedProd.price;
+    },
     addToList() {
       let obj = { list: this.activeList, ...this.newItemInList };
       console.log(obj);
@@ -118,7 +123,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["getProductsNotInList"]),
+    ...mapGetters(["getProductsNotInList", "productDetail"]),
     switchEnabled: function () {
       if (this.getProductsNotInList(this.activeList).length < 1) {
         return false;
@@ -137,6 +142,10 @@ export default {
   .list-group-item {
     padding: 1em 0.5em 0.5em;
   }
+}
+
+option {
+  text-transform: uppercase;
 }
 
 .form-check-input {
