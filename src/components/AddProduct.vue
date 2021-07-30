@@ -1,6 +1,8 @@
 <template>
   <div class="productForm">
     <div class="container">
+      <h4 v-if="product.id">Edit Product</h4>
+      <h4 v-else>Add Product</h4>
       <div class="row mb-3">
         <div class="col">
           <label class="form-label">Name</label>
@@ -77,19 +79,17 @@
         </div>
       </div>
       <div class="row mt-3">
-        <div class="col-6">
-
-        </div>
-        <div class="col-3">        
+        <div class="col-6"></div>
+        <div class="col-3">
           <a v-if="product.id" @click="reset" class="w-100 btn btn-primary"
             ><i class="fas fa-save"></i> Cancel</a
           >
-        </div>        
+        </div>
         <div class="col-3">
           <a @click="save" class="w-100 btn btn-primary"
             ><i class="fas fa-save"></i> Save</a
           >
-        </div>        
+        </div>
       </div>
     </div>
   </div>
@@ -138,14 +138,14 @@ export default {
         id: null,
       };
       this.$emit("savedproduct", this.product);
-    },    
+    },
   },
 };
 </script>
 
 <style scoped lang="scss">
 .productForm {
-  padding: 1em 0;
+  padding: 1.5rem 0;
   text-align: left;
 }
 
