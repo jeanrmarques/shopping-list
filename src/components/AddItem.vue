@@ -23,7 +23,9 @@
               v-for="(p, index) in getProductsNotInList(activeList)"
               :value="p.id"
             >
-              {{ p.brand }} {{ p.name +" "+ p.quantity + p.unit }} (${{ p.price}})
+              {{ p.brand }} {{ p.name + " " + p.quantity + p.unit }} (${{
+                p.price
+              }})
             </option>
           </select>
           <span

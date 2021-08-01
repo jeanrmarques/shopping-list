@@ -21,7 +21,8 @@
       @keyup="itemQuantityChange(p.data, $event)"
     />
     <span class="productName">
-      {{ p.details.brand }} {{ p.details.name +" "+ p.details.quantity + p.details.unit }}
+      {{ p.details.brand }}
+      {{ p.details.name + " " + p.details.quantity + p.details.unit }}
     </span>
     <div class="price">
       $
