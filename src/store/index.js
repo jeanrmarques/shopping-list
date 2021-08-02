@@ -292,7 +292,6 @@ export default createStore({
       try {
         resp = await ProductService.deleteProduct(product.id);
         console.log(resp.data);
-        commit("editProduct", resp.data);
         commit("removeProduct", product);
       } catch (err) {
         return;
@@ -319,17 +318,62 @@ export default createStore({
         return;
       }
     },
-    removeItem({ commit }, item) {
-      commit("removeItem", item);
+    async removeItem({ commit }, item) {
+      let resp;
+      try {
+        resp = await ItemService.deleteItem(item.id);
+        console.log(resp.data);
+        commit("removeItem", item);
+        return resp.data.id;
+      } catch (err) {
+        return;
+      }
     },
-    toggleItem({ commit }, item) {
-      commit("editItem", { item, checked: !item.checked });
+    async toggleItem({ commit }, item) {
+      let resp;
+      let checked = !item.checked;
+
+      let editedItem = { ...item };
+      editedItem.checked = checked;
+
+      try {
+        resp = await ItemService.updateItem(editedItem);
+        console.log(resp.data);
+        commit("editItem", { item, checked: resp.data.checked });
+        return resp.data.id;
+      } catch (err) {
+        return;
+      }
     },
-    changeItemQuantity({ commit }, { item, qty }) {
-      commit("editItem", { item, quantity: qty });
+    async changeItemQuantity({ commit }, { item, qty }) {
+      let resp;
+
+      let editedItem = { ...item };
+      editedItem.quantity = qty;
+
+      try {
+        resp = await ItemService.updateItem(editedItem);
+        console.log(resp.data);
+        commit("editItem", { item, quantity: resp.data.qty });
+        return resp.data.id;
+      } catch (err) {
+        return;
+      }
     },
-    changeItemPrice({ commit }, { item, price }) {
-      commit("editItem", { item, price: price });
+    async changeItemPrice({ commit }, { item, price }) {
+      let resp;
+
+      let editedItem = { ...item };
+      editedItem.price = price;
+
+      try {
+        resp = await ItemService.updateItem(editedItem);
+        console.log(resp.data);
+        commit("editItem", { item, price: resp.data.price });
+        return resp.data.id;
+      } catch (err) {
+        return;
+      }
     },
 
     setActiveList({ commit }, id) {

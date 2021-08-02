@@ -140,8 +140,9 @@ class ItemService {
   static updateItem(item) {
     console.log("updateItem API");
     console.log(item);
+    let put_url = item_url + item.id;
 
-    return axios.put(item_url, item);
+    return axios.put(put_url, item);
   }
 
   // Delete Item
