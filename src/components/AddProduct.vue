@@ -116,14 +116,14 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["addProduct", "addNewProduct", "updateProduct"]),
+    ...mapActions(["addProduct", "addProduct", "updateProduct"]),
     save() {
       if (this.product.id) {
         console.log("update");
         this.updateProduct(this.product);
       } else {
         console.log("add");
-        this.addNewProduct(this.product);
+        this.addProduct(this.product);
       }
       this.reset();
     },

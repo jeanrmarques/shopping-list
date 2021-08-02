@@ -69,8 +69,17 @@
       "category": "8",
       "quantity": "12",
       "unit": "Un",
-      "price": 0,
+      "price": "2.25",
       "id": "qgzE_ji"
+    },
+    {
+      "name": "Apple",
+      "brand": "",
+      "category": "12",
+      "quantity": 1,
+      "unit": "Un",
+      "price": "2",
+      "id": "LC_5WhX"
     }
   ],
   "lists": [
@@ -115,6 +124,14 @@
       "checked": false,
       "quantity": 1,
       "price": 0.75
+    },
+    {
+      "list": "60d8a265983cb22b34e405ac",
+      "product": "LC_5WhX",
+      "checked": false,
+      "quantity": 1,
+      "price": "2",
+      "id": "nJu1qDl"
     }
   ],
   "users": [

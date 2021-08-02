@@ -105,10 +105,9 @@ class ListService {
   static updateList(list) {
     console.log("updateList API");
     console.log(list);
+    let put_url = list_url + list.id;
 
-    return axios.put(list_url, {
-      list,
-    });
+    return axios.put(put_url, list);
   }
 
   // Delete List
@@ -125,9 +124,7 @@ class ItemService {
   static addItem(item) {
     console.log("addItem API");
     console.log(item);
-    return axios.post(item_url, {
-      item,
-    });
+    return axios.post(item_url, item);
   }
 
   // Get Items
@@ -144,9 +141,7 @@ class ItemService {
     console.log("updateItem API");
     console.log(item);
 
-    return axios.put(item_url, {
-      item,
-    });
+    return axios.put(item_url, item);
   }
 
   // Delete Item

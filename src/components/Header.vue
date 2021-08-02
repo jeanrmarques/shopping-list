@@ -34,12 +34,10 @@
             to="/products"
             ><i class="fas fa-carrot"></i> Products</router-link
           >
-          <a
-            class="nav-link disabled"
-            href="#"
-            tabindex="-1"
-            aria-disabled="true"
-            ><i class="fas fa-list-ul"></i> Lists</a
+          <router-link
+            :class="[$route.name == 'Lists' ? 'active' : '', 'nav-link']"
+            to="/lists"
+            ><i class="fas fa-list-ul"></i> Lists</router-link
           >
           <a
             class="nav-link disabled"

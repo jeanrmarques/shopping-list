@@ -6,19 +6,25 @@ import {
   ItemService,
 } from "../backendService";
 
-const STORAGE_KEY_PRODUCTS = "shoppinglist-products";
-const STORAGE_KEY_LISTS = "shoppinglist-lists";
-const STORAGE_KEY_ITEMS = "shoppinglist-items";
-const STORAGE_KEY_USERS = "shoppinglist-users";
+const STORAGE_KEY_ST_PRODUCTS = "shoppinglist-products";
+const STORAGE_KEY_ST_LISTS = "shoppinglist-lists";
+const STORAGE_KEY_ST_ITEMS = "shoppinglist-items";
+const STORAGE_KEY_ST_USERS = "shoppinglist-users";
 
 export default createStore({
   state: {
     products: JSON.parse(
-      window.localStorage.getItem(STORAGE_KEY_PRODUCTS) || "[]"
+      window.localStorage.getItem(STORAGE_KEY_ST_PRODUCTS) || "[]"
     ),
-    items: JSON.parse(window.localStorage.getItem(STORAGE_KEY_ITEMS) || "[]"),
-    lists: JSON.parse(window.localStorage.getItem(STORAGE_KEY_LISTS) || "[]"),
-    users: JSON.parse(window.localStorage.getItem(STORAGE_KEY_USERS) || "[]"),
+    items: JSON.parse(
+      window.localStorage.getItem(STORAGE_KEY_ST_ITEMS) || "[]"
+    ),
+    lists: JSON.parse(
+      window.localStorage.getItem(STORAGE_KEY_ST_LISTS) || "[]"
+    ),
+    users: JSON.parse(
+      window.localStorage.getItem(STORAGE_KEY_ST_USERS) || "[]"
+    ),
     activeList: null,
   },
   getters: {
@@ -212,18 +218,9 @@ export default createStore({
     },
 
     // Interactions
-    addProduct({ commit }, { name, brand, category }) {
-      let id = Math.floor(Math.random() * 100000);
-      let product = {
-        id: id,
-        name: name,
-        brand: brand || "",
-        category: category || null,
-      };
-      commit("addProduct", product);
-      return id;
-    },
-    async addNewProduct(
+
+    // Product
+    async addProduct(
       { commit },
       { name, brand, category, quantity, unit, price }
     ) {
@@ -236,11 +233,11 @@ export default createStore({
         unit: unit || "g",
         price: price || 0,
       };
-
       try {
         resp = await ProductService.addProduct(product);
         console.log(resp.data);
         commit("addProduct", resp.data);
+        return resp.data.id;
       } catch (err) {
         return;
       }
@@ -256,40 +253,71 @@ export default createStore({
         return;
       }
     },
-    newProductInList({ commit }, { list, name, quantity, price }) {
-      let id = Math.floor(Math.random() * 100000);
-      let item_id = Math.floor(Math.random() * 100000);
+    async newProductInList(
+      { commit, dispatch },
+      { list, name, brand, category, quantity, unit, price }
+    ) {
+      let resp;
       let product = {
-        id: id,
         name: name,
-        brand: "",
-        category: 0,
+        brand: brand || "",
+        category: category || null,
+        quantity: quantity || 0,
+        unit: unit || "g",
+        price: price || 0,
       };
-      let item = {
-        id: item_id,
-        list: list,
-        product: id,
-        checked: false,
-        quantity: quantity || 1,
-        price: price || 0.0,
-      };
-      commit("addProduct", product);
-      commit("addItem", item);
+      try {
+        resp = await ProductService.addProduct(product);
+        console.log(resp.data);
+        commit("addProduct", resp.data);
+        let prodID = resp.data.id;
+
+        let item = {
+          list: list,
+          checked: false,
+          product: prodID,
+          quantity: quantity || 1,
+          price: price || 0.0,
+        };
+        dispatch("addItem", item);
+
+        return resp.data.id;
+      } catch (err) {
+        return;
+      }
     },
-    removeProduct({ commit }, product) {
-      commit("removeProduct", product);
+    async removeProduct({ commit }, product) {
+      let resp;
+
+      try {
+        resp = await ProductService.deleteProduct(product.id);
+        console.log(resp.data);
+        commit("editProduct", resp.data);
+        commit("removeProduct", product);
+      } catch (err) {
+        return;
+      }
     },
-    addItem({ commit }, { list, product, quantity, price }) {
-      let id = Math.floor(Math.random() * 100000);
+
+    // Item
+    async addItem({ commit }, { list, product, quantity, price }) {
+      let resp;
       let item = {
-        id: id,
         list: list,
         product: product,
         checked: false,
         quantity: quantity,
         price: price,
       };
-      commit("addItem", item);
+
+      try {
+        resp = await ItemService.addItem(item);
+        console.log(resp.data);
+        commit("addItem", resp.data);
+        return resp.data.id;
+      } catch (err) {
+        return;
+      }
     },
     removeItem({ commit }, item) {
       commit("removeItem", item);
@@ -312,7 +340,22 @@ export default createStore({
   plugins: [
     (store) => {
       store.subscribe((mutation, { items }) => {
-        window.localStorage.setItem(STORAGE_KEY_ITEMS, JSON.stringify(items));
+        window.localStorage.setItem(
+          STORAGE_KEY_ST_ITEMS,
+          JSON.stringify(items)
+        );
+      });
+      store.subscribe((mutation, { products }) => {
+        window.localStorage.setItem(
+          STORAGE_KEY_ST_PRODUCTS,
+          JSON.stringify(products)
+        );
+      });
+      store.subscribe((mutation, { lists }) => {
+        window.localStorage.setItem(
+          STORAGE_KEY_ST_LISTS,
+          JSON.stringify(lists)
+        );
       });
     },
   ],
