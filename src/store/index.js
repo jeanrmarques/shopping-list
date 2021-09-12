@@ -354,7 +354,7 @@ export default createStore({
       try {
         resp = await ItemService.updateItem(editedItem);
         console.log(resp.data);
-        commit("editItem", { item, quantity: resp.data.qty });
+        commit("editItem", { item, quantity: resp.data.quantity });
         return resp.data.id;
       } catch (err) {
         return;

@@ -52,7 +52,7 @@
       "category": "3",
       "unit": "Kg",
       "quantity": "2",
-      "price": "2.45"
+      "price": "2.12"
     },
     {
       "name": "Shiitake",
@@ -77,8 +77,8 @@
       "brand": "",
       "category": "12",
       "quantity": 1,
-      "unit": "Un",
-      "price": "2",
+      "unit": "Kg",
+      "price": "2.24",
       "id": "LC_5WhX"
     }
   ],
@@ -107,7 +107,7 @@
       "product": "60d8659f1f060c1f3c309042",
       "checked": false,
       "quantity": 2,
-      "price": 4.55
+      "price": "4.54"
     },
     {
       "id": "2",
@@ -115,7 +115,7 @@
       "product": "60d8a0e2983cb22b34e405aa",
       "checked": false,
       "quantity": 1,
-      "price": 1.09
+      "price": "1.09"
     },
     {
       "id": "3543",
